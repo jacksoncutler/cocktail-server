@@ -1,3 +1,8 @@
+const sequelize = require('./database')
+sequelize.sync()
+  .then(() => console.log('db successfully connected'))
+  .catch((err) => console.error('db failed to connect:\n' + err))
+
 const express = require('express')
 const app = express() 
 
