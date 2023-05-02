@@ -27,6 +27,17 @@ async function updateDrink(data) {
   })
 }
 
+async function addTags(drinkId, tagIds) {
+  const [Drink, Tag] = [sequelize.models.Drink, sequelize.models.Tag]
+  const drink = await Drink.findByPk(drinkId)
+  const tags = await Tag.findAll({
+    where: { id: tagIds }
+  })
+  for (const tag of tags) {
+    await drink.addTag(tag)
+  }
+}
+
 async function deleteDrink(data) {
   const Drink = sequelize.models.Drink
   await Drink.destroy({
@@ -38,5 +49,6 @@ module.exports = {
   findAllDrinks,
   createDrink,
   updateDrink,
+  addTags,
   deleteDrink
 }

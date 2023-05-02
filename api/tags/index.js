@@ -23,6 +23,13 @@ router.put('/update', (req, res) => {
     })
 })
 
+router.patch('/addDrinks', (req, res) => {
+  handlers.addDrinks(req.body.tagId, req.body.drinkIds)
+    .then(() => {
+      res.sendStatus(200)
+    })
+})
+
 router.delete('/delete', (req, res) => {
   handlers.deleteTag(req.body)
     .then(() => {
