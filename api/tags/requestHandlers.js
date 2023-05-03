@@ -15,6 +15,20 @@ async function findAllTags() {
   })
 }
 
+async function findAllByType() {
+  const TagType = sequelize.models.TagType
+  const Tag = sequelize.models.Tag
+  return await TagType.findAll({
+    attributes: ['priority', 'name'],
+    include: {
+      model: Tag,
+      attributes: ['id', 'name'],
+      order: [['Tag.name']]
+    },
+    order: [['priority']]
+  })
+}
+
 async function updateTag(data) {
   const Tag = sequelize.models.Tag
   await Tag.update(data, {
@@ -42,6 +56,7 @@ async function deleteTag(data) {
 
 module.exports = {
   findAllTags,
+  findAllByType,
   createTag,
   updateTag,
   addDrinks,

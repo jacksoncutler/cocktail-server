@@ -16,6 +16,13 @@ router.get('/all', (_, res) => {
     })
 })
 
+router.get('/allByType', (_, res) => {
+  handlers.findAllByType()
+    .then((tags) => {
+      res.send(JSON.stringify(tags))
+    })
+})
+
 router.put('/update', (req, res) => {
   handlers.updateTag(req.body)
     .then(() => {
