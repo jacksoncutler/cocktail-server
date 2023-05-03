@@ -10,6 +10,29 @@ async function findAllDrinks() {
   })
 }
 
+async function findAllByLiquor() {
+  const [TagType, Tag, Drink] = [sequelize.models.TagType, sequelize.models.Tag, sequelize.models.Drink]
+  return await TagType.findOne({
+    where: { priority: 0 },
+    attributes: ['name'],
+    include: {
+      model: Tag,
+      attributes: ['name'],
+      include: {
+        model: Drink,
+        attributes: ['id', 'name', 'thumbnailKey'],
+        include: {
+          model: Tag,
+          attributes: ['name'],
+          through: { attributes: [] }
+        },
+        order: [['name']],
+        through: { attributes: [] }
+      }
+    }
+  })
+}
+
 async function createDrink(data) {
   const Drink = sequelize.models.Drink
   return await Drink.create(data, {
@@ -47,6 +70,7 @@ async function deleteDrink(data) {
 
 module.exports = {
   findAllDrinks,
+  findAllByLiquor,
   createDrink,
   updateDrink,
   addTags,

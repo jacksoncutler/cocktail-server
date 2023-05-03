@@ -16,6 +16,13 @@ router.get('/all', (_, res) => {
     })
 })
 
+router.get('/allByLiquor', (_, res) => {
+  handlers.findAllByLiquor()
+    .then((drinks) => {
+      res.send(JSON.stringify(drinks))
+    })
+})
+
 router.put('/update', (req, res) => {
   handlers.updateDrink(req.body)
     .then(() => {
