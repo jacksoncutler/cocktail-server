@@ -1,6 +1,16 @@
 const sequelize = require('../../database')
 
-async function findAllDrinks() {
+async function createDrink(data) {
+  const Drink = sequelize.models.Drink
+  return await Drink.create(data, {
+    include: {
+      model: sequelize.models.Tag,
+      include: sequelize.models.TagType
+    }
+  })
+}
+
+async function allDrinks() {
   const Drink = sequelize.models.Drink
   return await Drink.findAll({
     include: {
@@ -10,11 +20,10 @@ async function findAllDrinks() {
   })
 }
 
-async function findAllByLiquor() {
+async function allByLiquor() {
   const [TagType, Tag, Drink] = [sequelize.models.TagType, sequelize.models.Tag, sequelize.models.Drink]
-  return await TagType.findOne({
+  const liquorTagType = await TagType.findOne({
     where: { priority: 0 },
-    attributes: ['name'],
     include: {
       model: Tag,
       attributes: ['name'],
@@ -28,19 +37,11 @@ async function findAllByLiquor() {
         },
         order: [['name']],
         through: { attributes: [] }
-      }
+      },
+      order: [['name']]
     }
   })
-}
-
-async function createDrink(data) {
-  const Drink = sequelize.models.Drink
-  return await Drink.create(data, {
-    include: {
-      model: sequelize.models.Tag,
-      include: sequelize.models.TagType
-    }
-  })
+  return liquorTagType.Tags
 }
 
 async function updateDrink(data) {
@@ -69,9 +70,9 @@ async function deleteDrink(data) {
 }
 
 module.exports = {
-  findAllDrinks,
-  findAllByLiquor,
   createDrink,
+  allDrinks,
+  allByLiquor,
   updateDrink,
   addTags,
   deleteDrink

@@ -10,16 +10,16 @@ router.post('/new', (req, res) => {
 })
 
 router.get('/all', (_, res) => {
-  handlers.findAllDrinks()
+  handlers.allDrinks()
     .then((drinks) => {
       res.send(JSON.stringify(drinks))
     })
 })
 
 router.get('/allByLiquor', (_, res) => {
-  handlers.findAllByLiquor()
-    .then((drinks) => {
-      res.send(JSON.stringify(drinks))
+  handlers.allByLiquor()
+    .then((liquors) => {
+      res.send(JSON.stringify(liquors))
     })
 })
 

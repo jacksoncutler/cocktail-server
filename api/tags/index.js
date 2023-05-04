@@ -10,14 +10,14 @@ router.post('/new', (req, res) => {
 })
 
 router.get('/all', (_, res) => {
-  handlers.findAllTags()
+  handlers.allTags()
     .then((tags) => {
       res.send(JSON.stringify(tags))
     })
 })
 
 router.get('/allByType', (_, res) => {
-  handlers.findAllByType()
+  handlers.allByType()
     .then((tags) => {
       res.send(JSON.stringify(tags))
     })

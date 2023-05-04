@@ -5,7 +5,7 @@ async function createTag(data) {
   return await Tag.create(data)
 }
 
-async function findAllTags() {
+async function allTags() {
   const Tag = sequelize.models.Tag
   return await Tag.findAll({
     include: [
@@ -15,7 +15,7 @@ async function findAllTags() {
   })
 }
 
-async function findAllByType() {
+async function allByType() {
   const TagType = sequelize.models.TagType
   const Tag = sequelize.models.Tag
   return await TagType.findAll({
@@ -55,9 +55,9 @@ async function deleteTag(data) {
 }
 
 module.exports = {
-  findAllTags,
-  findAllByType,
   createTag,
+  allTags,
+  allByType,
   updateTag,
   addDrinks,
   deleteTag

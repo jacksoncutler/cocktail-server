@@ -5,7 +5,7 @@ async function createTagType(data) {
   return await TagType.create(data)
 }
 
-async function findAllTagTypes() {
+async function allTagTypes() {
   const TagType = sequelize.models.TagType
   return await TagType.findAll({
     include: sequelize.models.Tag
@@ -39,7 +39,7 @@ async function deleteTagType(data) {
 
 module.exports = {
   createTagType,
-  findAllTagTypes,
+  allTagTypes,
   updateTagType,
   addTags,
   deleteTagType
