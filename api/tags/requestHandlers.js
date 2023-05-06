@@ -8,9 +8,17 @@ async function createTag(data) {
 async function allTags() {
   const Tag = sequelize.models.Tag
   return await Tag.findAll({
+    attributes: ['id', 'name'],
     include: [
-      { model: sequelize.models.Drink },
-      { model: sequelize.models.TagType}
+        {
+          model: sequelize.models.Drink,
+          attributes: ['name'],
+          through: { attributes: [] }
+        },
+        { 
+          model: sequelize.models.TagType,
+          attributes: ['name', 'priority']
+        }
     ]
   })
 }

@@ -8,7 +8,12 @@ async function createTagType(data) {
 async function allTagTypes() {
   const TagType = sequelize.models.TagType
   return await TagType.findAll({
-    include: sequelize.models.Tag
+    attributes: ['name', 'priority'],
+    include: {
+      model: sequelize.models.Tag,
+      attributes: ['name']
+    },
+    order: [['priority']]
   })
 }
 
