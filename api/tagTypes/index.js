@@ -2,7 +2,7 @@ const express = require('express')
 const handlers = require('./requestHandlers')
 const router = express.Router()
 
-router.post('/new', (req, res) => {
+router.post('/create', (req, res) => {
   handlers.createTagType(req.body)
     .then((tagType) => {
       res.send(JSON.stringify(tagType))

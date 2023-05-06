@@ -2,7 +2,7 @@ const express = require('express')
 const handlers = require('./requestHandlers')
 const router = express.Router()
 
-router.post('/new', (req, res) => {
+router.post('/create', (req, res) => {
   handlers.createDrink(req.body)
     .then((drink) => {
       res.send(JSON.stringify(drink))
