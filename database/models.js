@@ -22,7 +22,7 @@ module.exports = (sequelize) => {
     drinkImageKey: { 
       type: DataTypes.STRING
     },
-    ingredientImageKey: { 
+    ingredientsImageKey: { 
       type: DataTypes.STRING
     },
   }, {
