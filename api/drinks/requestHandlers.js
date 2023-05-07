@@ -47,6 +47,26 @@ async function allByLiquor() {
   return liquors.Tags
 }
 
+async function findById(id) {
+  const Drink = sequelize.models.Drink
+  const Tag = sequelize.models.Tag
+  const TagType = sequelize.models.TagType
+
+  return await Drink.findByPk(id, {
+    attributes: ['id', 'name', 'ingredients', 'instructions', 'drinkImageKey', 'ingredientsImageKey'],
+    include: {
+      model: Tag,
+      attributes: ['name'],
+      include: {
+        model: TagType,
+        attributes: ['priority'],
+      },
+      through: { attributes: [] }
+    },
+    order: [[Tag, TagType, 'priority']]
+  })
+}
+
 async function updateDrink(data) {
   const Drink = sequelize.models.Drink
   await Drink.update(data, {
@@ -76,6 +96,7 @@ module.exports = {
   createDrink,
   allDrinks,
   allByLiquor,
+  findById,
   updateDrink,
   addTags,
   deleteDrink

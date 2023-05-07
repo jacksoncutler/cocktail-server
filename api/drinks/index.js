@@ -23,6 +23,13 @@ router.get('/allByLiquor', (_, res) => {
     })
 })
 
+router.get('/:id', (req, res) => {
+  handlers.findById(req.params.id)
+    .then((drink) => {
+      res.send(JSON.stringify(drink))
+    })
+})
+
 router.put('/update', (req, res) => {
   handlers.updateDrink(req.body)
     .then(() => {
