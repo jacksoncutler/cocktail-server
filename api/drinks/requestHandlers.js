@@ -43,11 +43,13 @@ async function allByLiquor() {
           attributes: ['name'],
           through: { attributes: [] }
         },
-        order: [['name']],
         through: { attributes: [] }
       },
-      order: [['name']]
-    }
+    },
+    order: [
+      [Tag, 'name'],
+      [Tag, Drink, 'name']
+    ]
   })
   return liquors.Tags
 }
