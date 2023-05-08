@@ -35,10 +35,10 @@ async function addTags(tagTypeId, tagIds) {
   }
 }
 
-async function deleteTagType(data) {
+async function deleteTagType(id) {
   const TagType = sequelize.models.TagType
   await TagType.destroy({
-    where: { id: data.id }
+    where: { id: id }
   })
 }
 

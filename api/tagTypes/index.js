@@ -31,7 +31,7 @@ router.patch('/addTags', (req, res) => {
 })
 
 router.delete('/delete', (req, res) => {
-  handlers.deleteTagType(req.body)
+  handlers.deleteTagType(req.body.id)
     .then(() => {
       res.sendStatus(200)
     })

@@ -45,7 +45,7 @@ router.patch('/addTags', (req, res) => {
 })
 
 router.delete('/delete', (req, res) => {
-  handlers.deleteDrink(req.body)
+  handlers.deleteDrink(req.body.id)
     .then(() => {
       res.sendStatus(200)
     })

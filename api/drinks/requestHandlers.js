@@ -94,10 +94,10 @@ async function addTags(drinkId, tagIds) {
   }
 }
 
-async function deleteDrink(data) {
+async function deleteDrink(id) {
   const Drink = sequelize.models.Drink
   await Drink.destroy({
-    where: { id: data.id }
+    where: { id: id }
   })
 }
 
