@@ -11,7 +11,9 @@ async function createDrink(data) {
 }
 
 async function allDrinks() {
-  const [Drink, Tag] = [sequelize.models.Drink, sequelize.models.Tag]
+  const Drink = sequelize.models.Drink
+  const Tag = sequelize.models.Tag
+  
   return await Drink.findAll({
     attributes: ['id', 'name', 'thumbnailKey'],
     include: {
@@ -24,7 +26,10 @@ async function allDrinks() {
 }
 
 async function allByLiquor() {
-  const [TagType, Tag, Drink] = [sequelize.models.TagType, sequelize.models.Tag, sequelize.models.Drink]
+  const TagType = sequelize.models.TagType
+  const Tag = sequelize.models.Tag
+  const Drink = sequelize.models.Drink
+
   const liquors = await TagType.findOne({
     where: { priority: 0 },
     include: {
@@ -75,7 +80,9 @@ async function updateDrink(data) {
 }
 
 async function addTags(drinkId, tagIds) {
-  const [Drink, Tag] = [sequelize.models.Drink, sequelize.models.Tag]
+  const Drink = sequelize.models.Drink
+  const Tag = sequelize.models.Tag
+
   const drink = await Drink.findByPk(drinkId)
   const tags = await Tag.findAll({
     where: { id: tagIds }
