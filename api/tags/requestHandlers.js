@@ -50,9 +50,7 @@ async function addDrinks(tagId, drinkIds) {
   const drinks = await Drink.findAll({
     where: { id: drinkIds }
   })
-  for (const drink of drinks) {
-    await tag.addDrink(drink)
-  }
+  await tag.addDrinks(drinks)
 }
 
 async function deleteTag(id) {

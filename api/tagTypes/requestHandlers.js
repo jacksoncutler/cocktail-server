@@ -30,9 +30,7 @@ async function addTags(tagTypeId, tagIds) {
   const tags = await Tag.findAll({ 
     where: { id: tagIds } 
   })
-  for (const tag of tags) {
-    await tagType.addTag(tag)
-  }
+  await tagType.addTags(tags)
 }
 
 async function deleteTagType(id) {

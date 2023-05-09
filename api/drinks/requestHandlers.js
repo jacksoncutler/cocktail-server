@@ -89,9 +89,7 @@ async function addTags(drinkId, tagIds) {
   const tags = await Tag.findAll({
     where: { id: tagIds }
   })
-  for (const tag of tags) {
-    await drink.addTag(tag)
-  }
+  await drink.addTags(tags)
 }
 
 async function removeTags(drinkId, tagIds) {
