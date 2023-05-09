@@ -44,6 +44,13 @@ router.patch('/addTags', (req, res) => {
     })
 })
 
+router.patch('/removeTags', (req, res) => {
+  handlers.removeTags(req.body.drinkId, req.body.tagIds)
+    .then(() => {
+      res.sendStatus(200)
+    })
+})
+
 router.delete('/delete', (req, res) => {
   handlers.deleteDrink(req.body.id)
     .then(() => {
