@@ -37,6 +37,13 @@ router.patch('/addDrinks', (req, res) => {
     })
 })
 
+router.patch('/changeType', (req, res) => {
+  handlers.changeType(req.body.tagId, req.body.tagTypeId)
+    .then(() => {
+      res.sendStatus(200)
+    })
+})
+
 router.delete('/delete', (req, res) => {
   handlers.deleteTag(req.body.id)
     .then(() => {

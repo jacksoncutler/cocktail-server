@@ -53,6 +53,19 @@ async function addDrinks(tagId, drinkIds) {
   await tag.addDrinks(drinks)
 }
 
+async function changeType(tagId, tagTypeId) {
+  const Tag = sequelize.models.Tag
+  const TagType = sequelize.models.TagType
+
+  const tag = await Tag.findByPk(tagId, {
+    include: TagType
+  })
+  const oldType = tag.TagType
+  const newType = await TagType.findByPk(tagTypeId)
+  oldType.removeTag(tag)
+  newType.addTag(tag)
+}
+
 async function deleteTag(id) {
   const Tag = sequelize.models.Tag
   await Tag.destroy({
@@ -66,5 +79,6 @@ module.exports = {
   allByType,
   updateTag,
   addDrinks,
+  changeType,
   deleteTag
 }
