@@ -16,8 +16,8 @@ router.get('/all', (_, res) => {
     })
 })
 
-router.get('/allByLiquor', (_, res) => {
-  handlers.allByLiquor()
+router.get('/allByType', (_, res) => {
+  handlers.allByType()
     .then((liquors) => {
       res.send(JSON.stringify(liquors))
     })

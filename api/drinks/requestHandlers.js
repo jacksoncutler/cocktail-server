@@ -25,7 +25,7 @@ async function allDrinks() {
   })
 }
 
-async function allByLiquor() {
+async function allByType() {
   const TagType = sequelize.models.TagType
   const Tag = sequelize.models.Tag
   const Drink = sequelize.models.Drink
@@ -114,7 +114,7 @@ async function deleteDrink(id) {
 module.exports = {
   createDrink,
   allDrinks,
-  allByLiquor,
+  allByType,
   findById,
   updateDrink,
   addTags,
