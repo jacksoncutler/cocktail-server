@@ -33,6 +33,18 @@ async function addTags(tagTypeId, tagIds) {
   await tagType.addTags(tags)
 }
 
+async function swapPriority(id1, id2) {
+  const TagType = sequelize.models.TagType
+
+  const type1 = await TagType.findByPk(id1)
+  const type2 = await TagType.findByPk(id2)
+  const tempPriority = type1.priority
+  type1.priority = type2.priority
+  type2.priority = tempPriority
+  type1.save()
+  type2.save()
+}
+
 async function deleteTagType(id) {
   const TagType = sequelize.models.TagType
   await TagType.destroy({
@@ -45,5 +57,6 @@ module.exports = {
   allTagTypes,
   updateTagType,
   addTags,
+  swapPriority,
   deleteTagType
 }

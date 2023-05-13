@@ -30,6 +30,13 @@ router.patch('/addTags', (req, res) => {
     })
 })
 
+router.patch('/swapPriority', (req, res) => {
+  handlers.swapPriority(req.body.id1, req.body.id2)
+    .then(() => {
+      res.sendStatus(200)
+    })
+})
+
 router.delete('/delete', (req, res) => {
   handlers.deleteTagType(req.body.id)
     .then(() => {
