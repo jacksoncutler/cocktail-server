@@ -70,6 +70,7 @@ async function findById(id) {
       },
       through: { attributes: [] }
     },
+    // get liquor type first in list
     order: [[Tag, TagType, 'priority']]
   })
 }

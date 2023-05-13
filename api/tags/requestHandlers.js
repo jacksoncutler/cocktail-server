@@ -19,7 +19,8 @@ async function allTags() {
           model: sequelize.models.TagType,
           attributes: ['name', 'priority']
         }
-    ]
+    ],
+    order: [['name']]
   })
 }
 
@@ -31,9 +32,11 @@ async function allByType() {
     include: {
       model: Tag,
       attributes: ['id', 'name'],
-      order: [['Tag.name']]
     },
-    order: [['priority']]
+    order: [
+      ['priority'],
+      [Tag, 'name']
+  ]
   })
 }
 
