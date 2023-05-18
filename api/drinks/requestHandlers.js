@@ -11,23 +11,12 @@ async function createDrink(data) {
   })
 }
 
-async function allDrinks(filterIds) {
+async function allDrinks(tagIds) {
   const Drink = sequelize.models.Drink
   const Tag = sequelize.models.Tag
   
-  const drinks = await Drink.findAll({
-    attributes: ['id'],
-    include: { 
-      model: Tag,
-      attributes: ['id'],
-      where: { id: filterIds },
-  },
-    group: 'Drink.id',
-    having: sequelize.where(sequelize.fn('count', sequelize.col('Tags.id')), { 
-      [Op.eq]: filterIds.length }),
-  })
+  const drinkIds = await getFilteredIds(tagIds)
 
-  const drinkIds = drinks.map((drink) => drink.id)
   return await Drink.findAll({
     attributes: ['id', 'name', 'thumbnailKey'],
     where: { 'id': drinkIds },
@@ -40,7 +29,7 @@ async function allDrinks(filterIds) {
   })
 }
 
-async function allByType(filterIds) {
+async function allByType(tagIds) {
   const TagType = sequelize.models.TagType
   const Tag = sequelize.models.Tag
   const Drink = sequelize.models.Drink
@@ -125,6 +114,26 @@ async function deleteDrink(id) {
   await Drink.destroy({
     where: { id: id }
   })
+}
+
+// HELPERS
+
+async function getFilteredIds(tagIds) {
+  const Drink = sequelize.models.Drink
+  const Tag = sequelize.models.Tag
+  
+  const drinks = await Drink.findAll({
+    attributes: ['id'],
+    include: { 
+      model: Tag,
+      attributes: ['id'],
+      where: { id: tagIds },
+    },
+    group: 'Drink.id',
+    having: sequelize.where(sequelize.fn('count', sequelize.col('Tags.id')), { 
+      [Op.eq]: tagIds.length }),
+  })
+  return drinks.map((drink) => drink.id)
 }
 
 module.exports = {
