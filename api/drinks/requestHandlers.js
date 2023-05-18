@@ -1,3 +1,4 @@
+const { Op } = require('sequelize')
 const sequelize = require('../../database')
 
 async function createDrink(data) {
@@ -10,22 +11,36 @@ async function createDrink(data) {
   })
 }
 
-async function allDrinks() {
+async function allDrinks(filterIds) {
   const Drink = sequelize.models.Drink
   const Tag = sequelize.models.Tag
   
+  const drinks = await Drink.findAll({
+    attributes: ['id'],
+    include: { 
+      model: Tag,
+      attributes: ['id'],
+      where: { id: filterIds },
+  },
+    group: 'Drink.id',
+    having: sequelize.where(sequelize.fn('count', sequelize.col('Tags.id')), { 
+      [Op.eq]: filterIds.length }),
+  })
+
+  const drinkIds = drinks.map((drink) => drink.id)
   return await Drink.findAll({
     attributes: ['id', 'name', 'thumbnailKey'],
+    where: { 'id': drinkIds },
     include: {
       model: Tag,
       attributes: ['name'],
       through: { attributes: [] }
-  },
+    },
     order: [['name']]
   })
 }
 
-async function allByType() {
+async function allByType(filterIds) {
   const TagType = sequelize.models.TagType
   const Tag = sequelize.models.Tag
   const Drink = sequelize.models.Drink

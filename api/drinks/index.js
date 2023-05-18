@@ -9,15 +9,15 @@ router.post('/create', (req, res) => {
     })
 })
 
-router.get('/all', (_, res) => {
-  handlers.allDrinks()
+router.get('/all', (req, res) => {
+  handlers.allDrinks(req.query.tagIds)
     .then((drinks) => {
       res.send(JSON.stringify(drinks))
     })
 })
 
-router.get('/allByType', (_, res) => {
-  handlers.allByType()
+router.get('/allByType', (req, res) => {
+  handlers.allByType(req.query.tagIds)
     .then((liquors) => {
       res.send(JSON.stringify(liquors))
     })
