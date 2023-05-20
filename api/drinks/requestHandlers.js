@@ -11,15 +11,20 @@ async function createDrink(data) {
   })
 }
 
-async function allDrinks(tagIds) {
+async function allDrinks(tagIds=[]) {
   const Drink = sequelize.models.Drink
   const Tag = sequelize.models.Tag
   
-  const drinkIds = await getFilteredIds(tagIds)
+  tagIds = Array.from(tagIds)
+  const drinkFilterClause = (
+      tagIds.length 
+      ? { 'id': await getFilteredIds(tagIds) } 
+      : {}
+  )
 
   return await Drink.findAll({
     attributes: ['id', 'name', 'thumbnailKey'],
-    where: { 'id': drinkIds },
+    where: drinkFilterClause,
     include: {
       model: Tag,
       attributes: ['name'],
@@ -29,10 +34,17 @@ async function allDrinks(tagIds) {
   })
 }
 
-async function allByType(tagIds) {
+async function allByType(tagIds=[]) {
   const TagType = sequelize.models.TagType
   const Tag = sequelize.models.Tag
   const Drink = sequelize.models.Drink
+
+  tagIds = Array.from(tagIds)
+  const drinkFilterClause = (
+      tagIds.length
+      ? { 'id': await getFilteredIds(tagIds) } 
+      : {}
+  )
 
   const liquors = await TagType.findOne({
     where: { priority: 0 },
@@ -42,6 +54,7 @@ async function allByType(tagIds) {
       include: {
         model: Drink,
         attributes: ['id', 'name', 'thumbnailKey'],
+        where: drinkFilterClause,
         include: {
           model: Tag,
           attributes: ['name'],
@@ -74,7 +87,6 @@ async function findById(id) {
       },
       through: { attributes: [] }
     },
-    // get liquor type first in list
     order: [[Tag, TagType, 'priority']]
   })
 }
